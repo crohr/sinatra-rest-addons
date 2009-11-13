@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/helper'
-require 'sinatra/rest/routes'
 require 'json'
 
 class RoutesTest < Test::Unit::TestCase
