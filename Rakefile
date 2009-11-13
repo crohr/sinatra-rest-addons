@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/crohr/sinatra-rest-addons"
     gem.authors = ["Cyril Rohr"]
     gem.add_development_dependency "contest", ">= 0"
+    gem.add_dependency "sinatra", ">= 0.9.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
