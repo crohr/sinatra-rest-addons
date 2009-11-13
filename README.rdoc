@@ -1,0 +1,8 @@
+= sinatra-rest-addons
+
+A set of helpers and extensions for sinatra apps that expose REST resources.
+
+== Copyright
+
+Copyright (c) 2009 Cyril Rohr. See LICENSE for details.
+Copyright (c) 2009 INRIA Rennes - Bretagne Atlantique. See LICENSE for details.
