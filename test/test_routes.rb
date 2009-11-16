@@ -20,7 +20,6 @@ class RoutesTest < Test::Unit::TestCase
   end
   
   context "route option :provides" do
-
   
     test "should return 406 and the list of supported types, if the server does not support the types accepted by the client [simple matching]" do
       mock_app {
@@ -56,6 +55,18 @@ class RoutesTest < Test::Unit::TestCase
       get '/', {}, { 'HTTP_ACCEPT' => 'application/*' }
       assert_equal 200, last_response.status
       assert_equal 'application/*', last_response.body
+      assert_equal 'application/xml', last_response.headers['Content-Type']
+    end
+    test "should respect the order in which the accepted formats are declared when looking for the format to select" do
+      mock_app {
+        register Sinatra::REST::Routes
+        get '/', :provides => ["application/json", "application/xml", "application/vnd.x.y.z+xml"] do
+          request.env['HTTP_ACCEPT']
+        end
+      }
+      get '/', {}, { 'HTTP_ACCEPT' => 'application/xml, */*' }
+      assert_equal 200, last_response.status
+      assert_equal 'application/xml, */*', last_response.body
       assert_equal 'application/xml', last_response.headers['Content-Type']
     end
     test "should be successful if the accepted type does not require a specific level" do

@@ -36,12 +36,14 @@ module Sinatra
           accepted_formats = request.accept.map do |f| 
             generate_type_hash.call(f)
           end
-          selected_format = supported_formats.detect{ |supported_format| 
-            !accepted_formats.detect{ |accepted_format| 
+          selected_format = nil
+          accepted_formats.each{ |accepted_format| 
+            selected_format = supported_formats.detect{ |supported_format| 
               Regexp.new(Regexp.escape(accepted_format["type"]).gsub("\\*", ".*?"), Regexp::IGNORECASE) =~ supported_format["type"] &&
                 (accepted_format["level"] || INFINITY).to_f >= (supported_format["level"] || 0).to_f
-            }.nil?
-          }      
+            }
+            break unless selected_format.nil?
+          } 
           if selected_format.nil?
             content_type :txt
             halt 406, supported_formats.map{|f| 
