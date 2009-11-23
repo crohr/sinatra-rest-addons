@@ -98,11 +98,15 @@ module Sinatra
             when /^application\/x-www-form-urlencoded/i
               request.env['sinatra.decoded_input'] = request.env['rack.request.form_hash']
             else
-              if not size_range.include?(request.env['rack.input'].size)
+              content = ""
+              request.env['rack.input'].each do |block|
+                content.concat(block)
+                break if content.length > size_range.end
+              end
+              if not size_range.include?(content.length)
                 content_type :txt
                 halt 400, "Input data size must be between #{size_range.begin} and #{size_range.end} bytes."
               else
-                content = request.env['rack.input'].read
                 request.env['sinatra.decoded_input'] = parsing_proc.call(mime_type, content)
               end
             end

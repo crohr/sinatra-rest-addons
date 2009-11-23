@@ -161,6 +161,21 @@ class RoutesTest < Test::Unit::TestCase
       assert_equal JSON.dump(input), last_response.body
       assert_equal 'application/json', last_response.headers['Content-Type']
     end
+    test "should work" do
+      input = "{\"walltime\":3600,\"resources\":\"/nodes=1\",\"at\":1258552306,\"on_launch\":{\"in\":\"/home/crohr\",\"do\":\"id\"}}" 
+      mock_app {
+        register Sinatra::REST::Routes
+        post '/', :decode => [PARSING_PROC, 2...3000] do
+          content_type 'application/json'
+          JSON.dump request.env['sinatra.decoded_input']
+        end
+      }
+      post '/', input, {'CONTENT_TYPE' => "application/json"}
+      p last_response.body
+      assert_equal 200, last_response.status
+      assert_equal JSON.parse(input), JSON.parse(last_response.body)
+      assert_equal 'application/json', last_response.headers['Content-Type']
+    end
     test "should set the decoded input to the params hash already decoded by Sinatra, if the request's content type is application/x-www-form-urlencoded" do
       input = {"key1" => ["value1", "value2"]}
       mock_app {
