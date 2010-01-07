@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sinatra-rest-addons}
-  s.version = "0.1.4"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cyril Rohr"]
-  s.date = %q{2009-11-23}
+  s.date = %q{2010-01-07}
   s.description = %q{A set of helpers and extensions for sinatra apps that expose REST resources.}
   s.email = %q{cyril.rohr@gmail.com}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "lib/sinatra/rest/routes.rb",
      "sinatra-rest-addons.gemspec",
      "test/helper.rb",
+     "test/test_helpers.rb",
      "test/test_routes.rb"
   ]
   s.homepage = %q{http://github.com/crohr/sinatra-rest-addons}
@@ -35,6 +36,7 @@ Gem::Specification.new do |s|
   s.summary = %q{A set of helpers and extensions for sinatra apps that expose REST resources.}
   s.test_files = [
     "test/helper.rb",
+     "test/test_helpers.rb",
      "test/test_routes.rb"
   ]
 
